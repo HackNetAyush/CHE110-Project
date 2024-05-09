@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Indian Maps</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+    ></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      #map {
+        height: 1080px;
+        width: 100%;
+        z-index: 1;
+        /* margin-top: 40px; */
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- <nav class="bg-gray-800 p-2 mt-0 fixed w-full z-20 top-0">
+        <div class="container mx-auto flex flex-wrap items-center">
+            <div class="flex w-full md:w-1/2 justify-center md:justify-start text-white font-extrabold">
+                <a class="text-white no-underline hover:text-white hover:no-underline" href="#">
+                    <span class="text-2xl pl-2">CultivateIndia</span>
+                </a>
+            </div>
+            <div class="flex w-full pt-2 content-center justify-between md:w-1/2 md:justify-end">
+                <ul class="list-reset flex justify-between flex-1 md:flex-none items-center">
+                    <li class="mr-3">
+                        <a class="inline-block py-2 px-4 text-white hover:text-cyan-500 no-underline"
+                            href="index.html">Home</a>
+                    </li>
+                    <li class="mr-3">
+                        <a class="inline-block text-white no-underline hover:text-cyan-500 hover:text-underline py-2 px-4"
+                            href="index.html#ask">Ask</a>
+                    </li>
+                    <li class="mr-3">
+                        <a class="inline-block text-white no-underline hover:text-cyan-500 hover:text-underline py-2 px-4"
+                            href="blog.html">Blog</a>
+                    </li>
+                    <li class="mr-3">
+                        <a class="inline-block text-white no-underline hover:text-cyan-500 hover:text-underline py-2 px-4"
+                            href="maps.html">Map</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav> -->
+
+    <!-- <h1>Indian Maps</h1> -->
+    <div id="map" class=""></div>
+    <footer class="bg-gray-800 border-t border-gray-400 shadow">
+      <div class="container max-w-6xl mx-auto flex items-center px-2 py-5">
+        <div class="w-full mx-auto flex flex-wrap items-center">
+          <div
+            class="flex w-full md:w-1/2 justify-center md:justify-start text-white"
+          >
+            <a
+              class="text-white no-underline hover:text-white hover:no-underline"
+              href="#"
+            >
+              <span class="text-xl pl-2">CultivateIndia</span>
+            </a>
+          </div>
+          <div
+            class="flex w-full pt-2 content-center justify-between md:w-1/2 md:justify-end"
+          >
+            <ul
+              class="list-reset flex justify-between flex-1 md:flex-none items-center"
+            >
+              <li>
+                <a
+                  class="inline-block py-2 px-3 text-white no-underline"
+                  href="index.html"
+                  >Home</a
+                >
+              </li>
+              <li>
+                <a
+                  class="inline-block text-white no-underline hover:text-gray-200 hover:text-underline py-2 px-3"
+                  href="index.html#ask"
+                  >Ask</a
+                >
+              </li>
+              <li>
+                <a
+                  class="inline-block text-white no-underline hover:text-gray-200 hover:text-underline py-2 px-3"
+                  href="blog.html"
+                  >blog</a
+                >
+              </li>
+              <li>
+                <a
+                  class="inline-block text-white no-underline hover:text-gray-200 hover:text-underline py-2 px-3"
+                  href="maps.html"
+                  >map</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="container mx-auto px-4 py-4 text-center text-gray-400">
+        <p>
+          Designed and developed by Aditya Kumar, Sravan Krishna C M, Prajjwal
+          Verma
+        </p>
+      </div>
+    </footer>
+    <script>
+      const map = L.map("map");
+      map.setView([22.675, 77.871], 5);
+
+      L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        maxZoom: 19,
+        attribution:
+          '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+      }).addTo(map);
+
+      // Define biodiversity information for each location
+      const biodiversityInfo = {
+        Gujarat:
+          "Gujarat is rich in biodiversity, with a variety of ecosystems including coastal areas, grasslands, and forests. It is home to diverse flora and fauna, including species like Asiatic lions, Indian wild ass, and various migratory birds.",
+        "Madhya Pradesh":
+          "Madhya Pradesh boasts a diverse range of ecosystems, including dense forests, grasslands, and wetlands. It is known for its rich biodiversity, with a wide variety of flora and fauna. The state is home to several national parks and wildlife sanctuaries, providing habitats for species like tigers, leopards, and sloth bears.",
+        Delhi:
+          "Delhi, despite being a highly urbanized area, still has pockets of biodiversity. The city has several parks and green spaces that support a variety of plant and animal species. Delhi's biodiversity includes birds, insects, and small mammals, and efforts are being made to conserve and enhance green areas within the city.",
+        "Uttar Pradesh":
+          "Uttar Pradesh has diverse ecosystems ranging from the Himalayan foothills in the north to the Gangetic plains in the south. The state is home to several national parks and wildlife sanctuaries, including Dudhwa National Park and Katarniaghat Wildlife Sanctuary. Its biodiversity includes species like tigers, elephants, and rare birds.",
+        Maharashtra:
+          "Maharashtra's biodiversity is characterized by its coastal areas, forests, and mountain ranges. The state is known for its rich flora and fauna, with species like tigers, leopards, and Indian giant squirrels found in its forests. Maharashtra also has marine biodiversity along its coastline, including coral reefs and marine mammals.",
+        Rajasthan:
+          "Rajasthan's biodiversity is adapted to its arid and semi-arid climate. The state has diverse ecosystems, including desert areas, grasslands, and wetlands. Despite its harsh environment, Rajasthan supports a variety of wildlife, including desert-adapted species like camels, desert foxes, and various bird species.",
+        "Tamil Nadu":
+          "Tamil Nadu has a diverse range of ecosystems, including forests, wetlands, and coastal areas. The state is known for its rich biodiversity, with species like tigers, elephants, and Nilgiri tahrs found in its forests. Tamil Nadu also has a unique marine biodiversity along its coastline, including marine turtles and coral reefs.",
+        Karnataka:
+          "Karnataka's biodiversity is influenced by its varied geography, including the Western Ghats and coastal regions. The state is home to several national parks and wildlife sanctuaries, such as Bandipur National Park and Nagarhole National Park. Karnataka's biodiversity includes species like tigers, elephants, and endemic bird species.",
+        "West Bengal":
+          "West Bengal's biodiversity is influenced by its diverse landscapes, including the Sundarbans mangrove forest, Himalayan foothills, and Gangetic plains. The state is known for its rich flora and fauna, with species like Royal Bengal tigers, Gangetic dolphins, and diverse bird species found in its habitats.",
+        Kerala:
+          "Kerala's biodiversity is characterized by its Western Ghats mountain range, tropical forests, and backwaters. The state is known for its rich flora and fauna, including endemic species like the Nilgiri langur and Malabar trogon. Kerala also has marine biodiversity along its coast, including coral reefs and sea turtles.",
+        "Andhra Pradesh":
+          "Andhra Pradesh has diverse ecosystems, including coastal regions, forests, and wetlands. The state is home to several wildlife sanctuaries and bird sanctuaries, providing habitats for species like tigers, elephants, and various bird species. Andhra Pradesh's marine biodiversity includes marine mammals and sea turtles along its coastline.",
+        Telangana:
+          "Telangana's biodiversity is influenced by its varied geography, including the Deccan Plateau and riverine ecosystems. The state is home to several wildlife sanctuaries and tiger reserves, such as Kawal Wildlife Sanctuary and Amrabad Tiger Reserve. Telangana's biodiversity includes species like tigers, leopards, and rare bird species.",
+        Chhattisgarh:
+          "Chhattisgarh's biodiversity is characterized by its diverse ecosystems, including forests, grasslands, and wetlands. The state is home to several national parks and wildlife sanctuaries, providing habitats for species like tigers, leopards, and sloth bears. Chhattisgarh's biodiversity also includes endemic species like the Bastar hill myna.",
+        Odisha:
+          "Odisha's biodiversity is influenced by its varied geography, including coastal regions, forests, and wetlands. The state is known for its rich flora and fauna, with species like tigers, elephants, and Olive Ridley turtles found in its habitats. Odisha also has marine biodiversity along its coastline, including coral reefs and marine mammals.",
+        Bihar:
+          "Bihar's biodiversity is influenced by its diverse ecosystems, including Gangetic plains, forests, and wetlands. The state is home to several wildlife sanctuaries and national parks, providing habitats for species like tigers, elephants, and rare bird species. Bihar's biodiversity also includes species like the gharial and red panda.",
+        Punjab:
+          "Punjab's biodiversity is influenced by its agricultural landscape, riverine ecosystems, and wetlands. The state is home to several bird sanctuaries and wetland reserves, providing habitats for migratory birds and waterfowl. Punjab's biodiversity also includes species like the Indus river dolphin and blackbuck antelope.",
+        Uttarakhand:
+          "Uttarakhand's biodiversity is characterized by its Himalayan landscape, forests, and alpine meadows. The state is home to several national parks and wildlife sanctuaries, including Jim Corbett National Park and Valley of Flowers National Park. Uttarakhand's biodiversity includes species like tigers, snow leopards, and Himalayan monal.",
+        "Himachal Pradesh":
+          "Himachal Pradesh's biodiversity is influenced by its Himalayan landscape, forests, and alpine meadows. The state is home to several national parks and wildlife sanctuaries, providing habitats for species like snow leopards, Himalayan tahr, and musk deer. Himachal Pradesh's biodiversity also includes diverse bird species.",
+        "Jammu and Kashmir":
+          "Jammu and Kashmir's biodiversity is influenced by its Himalayan landscape, forests, and high-altitude ecosystems. The state is home to several national parks and wildlife sanctuaries, including Dachigam National Park and Hemis National Park. Jammu and Kashmir's biodiversity includes species like snow leopards, brown bears, and ibex.",
+        Assam:
+          "Assam's biodiversity is influenced by its diverse ecosystems, including forests, wetlands, and riverine habitats. The state is known for its rich flora and fauna, with species like the one-horned rhinoceros, Asian elephants, and Bengal tigers found in its habitats. Assam also has diverse birdlife and is a hotspot for birdwatching.",
+        Manipur:
+          "Manipur's biodiversity is characterized by its diverse ecosystems, including forests, wetlands, and grasslands. The state is home to several wildlife sanctuaries and national parks, providing habitats for species like clouded leopards, sangai deer, and Hoolock gibbons. Manipur's biodiversity also includes rare bird species.",
+        Meghalaya:
+          "Meghalaya's biodiversity is influenced by its hilly terrain, forests, and unique limestone caves. The state is known for its rich flora and fauna, with species like clouded leopards, Asian elephants, and hornbills found in its habitats. Meghalaya's biodiversity also includes endemic species like the Meghalaya pit viper.",
+        Nagaland:
+          "Nagaland's biodiversity is characterized by its diverse ecosystems, including forests, grasslands, and wetlands. The state is home to several wildlife sanctuaries and national parks, providing habitats for species like Hoolock gibbons, Blyth's tragopan, and Naga wren-babbler. Nagaland's biodiversity also includes rare butterfly species.",
+        Tripura:
+          "Tripura's biodiversity is influenced by its diverse ecosystems, including forests, wetlands, and riverine habitats. The state is home to several wildlife sanctuaries and national parks, providing habitats for species like clouded leopards, Asian elephants, and phayre's langur. Tripura's biodiversity also includes rare orchid species.",
+        Sikkim:
+          "Sikkim's biodiversity is characterized by its Himalayan landscape, forests, and alpine meadows. The state is home to several wildlife sanctuaries and national parks, providing habitats for species like red pandas, Himalayan black bears, and khaleej pheasants. Sikkim's biodiversity also includes rare orchid species.",
+        "Arunachal Pradesh":
+          "Arunachal Pradesh's biodiversity is influenced by its diverse ecosystems, including forests, alpine meadows, and high-altitude habitats. The state is known for its rich flora and fauna, with species like snow leopards, red pandas, and takins found in its habitats. Arunachal Pradesh's biodiversity also includes rare bird species.",
+      };
+
+      // Function to create popup content with biodiversity information
+      function createPopupContent(location) {
+        const biodiversity = biodiversityInfo[location];
+        return `<h2>${location}</h2><p>${biodiversity}</p>`;
+      }
+
+      // Define marker locations and bind popups with biodiversity information
+      const markerLocations = [
+        { coordinates: [22.553, 71.719], title: "Gujarat" }, // Gujarat: [22.553, 71.719]
+        { coordinates: [22.675, 77.871], title: "Madhya Pradesh" }, // Madhya Pradesh: [22.675, 77.871]
+        { coordinates: [28.7041, 77.1025], title: "Delhi" }, // Delhi: [28.7041, 77.1025]
+        { coordinates: [19.7515, 75.7139], title: "Maharashtra" }, // Maharashtra: [19.7515, 75.7139]
+        { coordinates: [11.1271, 78.6569], title: "Tamil Nadu" }, // Tamil Nadu: [11.1271, 78.6569]
+        { coordinates: [15.3173, 75.7139], title: "Karnataka" }, // Karnataka: [15.3173, 75.7139]
+        { coordinates: [22.9868, 87.855], title: "West Bengal" }, // West Bengal: [22.9868, 87.855]
+        { coordinates: [27.0238, 74.2179], title: "Rajasthan" }, // Rajasthan: [27.0238, 74.2179]
+        { coordinates: [10.3257, 76.2038], title: "Kerala" }, // Kerala: [10.3257, 76.2038]
+        { coordinates: [15.988, 79.717], title: "Andhra Pradesh" }, // Andhra Pradesh: [15.988, 79.717]
+        { coordinates: [17.1232, 79.2089], title: "Telangana" }, // Telangana: [17.1232, 79.2089]
+        { coordinates: [21.2787, 81.8661], title: "Chhattisgarh" }, // Chhattisgarh: [21.2787, 81.8661]
+        { coordinates: [20.9517, 85.0985], title: "Odisha" }, // Odisha: [20.9517, 85.0985]
+        { coordinates: [26.8467, 80.9462], title: "Uttar Pradesh" }, // Uttar Pradesh: [26.8467, 80.9462]
+        { coordinates: [25.0961, 85.3131], title: "Bihar" }, // Bihar: [25.0961, 85.3131]
+        { coordinates: [31.1471, 75.3412], title: "Punjab" }, // Punjab: [31.1471, 75.3412]
+        { coordinates: [30.0668, 79.0193], title: "Uttarakhand" }, // Uttarakhand: [30.0668, 79.0193]
+        { coordinates: [31.1048, 77.1734], title: "Himachal Pradesh" }, // Himachal Pradesh: [31.1048, 77.1734]
+        { coordinates: [33.7782, 76.5762], title: "Jammu and Kashmir" }, // Jammu and Kashmir: [33.7782, 76.5762]
+        { coordinates: [26.2006, 92.9376], title: "Assam" }, // Assam: [26.2006, 92.9376]
+        { coordinates: [25.467, 91.3662], title: "Meghalaya" }, // Meghalaya: [25.467, 91.3662]
+        { coordinates: [27.0238, 88.1065], title: "Sikkim" }, // Sikkim: [27.0238, 88.1065]
+        { coordinates: [24.6637, 93.9063], title: "Manipur" }, // Manipur: [24.6637, 93.9063]
+        { coordinates: [26.1584, 94.5624], title: "Nagaland" }, // Nagaland: [26.1584, 94.5624]
+        { coordinates: [28.218, 94.7278], title: "Arunachal Pradesh" }, // Arunachal Pradesh: [28.218, 94.7278]
+        { coordinates: [23.9408, 91.9882], title: "Tripura" }, // Tripura: [23.9408, 91.9882]
+        {
+          coordinates: [20.4283, 72.8397],
+          title: "Dadra and Nagar Haveli and Daman and Diu",
+        }, // Dadra and Nagar Haveli and Daman and Diu: [20.4283, 72.8397]
+      ];
+
+      markerLocations.forEach((location) => {
+        const marker = L.marker(location.coordinates, {
+          title: location.title,
+        }).addTo(map);
+        const popupContent = createPopupContent(location.title);
+        marker.bindPopup(popupContent);
+      });
+    </script>
+  </body>
+</html>
